@@ -168,3 +168,12 @@ P5
 ```
 then : 124 * 0.05 = 6.2 m on X axis 
        116 * 0.05 = 2.8 m on Y axis
+
+##  SLAM Activity - Create a New Map in Turtlebot3 House
+
+Generate the map of TurtleBOT3 House !!
+
+Hint :  to open the house world 
+```bash
+ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+```
