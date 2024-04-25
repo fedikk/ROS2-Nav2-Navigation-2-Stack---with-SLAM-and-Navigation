@@ -177,3 +177,16 @@ Hint :  to open the house world
 ```bash
 ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
 ```
+### challenge_TurtleBOT3_house_map.yaml
+```yaml
+image: my_house.pgm
+mode: trinary
+resolution: 0.05
+origin: [-5.76, -5.14, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25
+```
+___ 
+
+# Section 4 : Make a Robot Navigate with Nav2
