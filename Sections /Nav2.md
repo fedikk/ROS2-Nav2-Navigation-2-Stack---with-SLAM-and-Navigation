@@ -253,8 +253,9 @@ we can go a multiple goal to go **A** then **B** then **C**
 
 1. Set the __`Pose`__ of the robot
 2. Click on Waypoint :
+ 
    ![waypoint](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/07ed4764-67bf-4e0a-a66f-5ef4c3752b3e)
-3. Click on **`Nav2 Goal and set the point yu want`**
+3. Click on **`Nav2 Goal and set the point you want`**
    ![waypoints_goals](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/39323ee9-b2fa-45c5-834f-798dacdc52ec)
 4. finally, Press on **`Start Nav Through Poses`**
 
@@ -263,3 +264,27 @@ we can go a multiple goal to go **A** then **B** then **C**
 if you choose a goal for the robot and the path was planned its update every time a new obstacle is detected.
 
 # Section 5 : Understand the nav2 stack 
+## Global Planner, Local Planner and Costmaps
+we have to main parts : 
+1. the global planner
+2. the locale planner 
+
+### STEP1 : Create the path 
+ Let's focus on the __`global planner`__ : 
+ - will compute the path between the **robot pose** and the **goal pose**
+ - How does it compute the path  ?
+ - it uses the entire map to compute the best path based on **`cost map ( where each pixel has a cost ) `** the colorfull one
+ - the white pixel has **`0 cost`** and the darker pixels has **`maximum cost`**
+ - we have some kind of  **`safety margin`** : the one on **`blue`**
+ - the global plan will be updated every **` 1 2 or 3 Hz`**
+ ![cost_map](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/3b170176-6e62-43fe-94a4-6605a2341288)
+### STEP2 : Sending the Path to the local planner 
+- the controller will control the robot to follow the path : **`see the blue line`**
+- the __update_rate__ for this controller will be higher : **`20 50 100 Hz`**
+
+![local_costmap](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/cfb6ee32-a148-4185-a201-274619749cf7)
+
+  
+Real Life analogie :
+- imagine that we are drinving a car with a GPS system : you tell the GPS you want to go to a specific GOAL
+- the GPS will tell you the path and where to go and you controll the car to follow the path 
