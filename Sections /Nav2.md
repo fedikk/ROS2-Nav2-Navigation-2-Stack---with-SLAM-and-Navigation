@@ -190,3 +190,40 @@ free_thresh: 0.25
 ___ 
 
 # Section 4 : Make a Robot Navigate with Nav2
+
+## A Quick Fix We Need To Do Before Starting
+
+we are going to fix the lag on loading the map 
+
+follow this commands in the same order 
+
+```bash 
+sudo apt update && sudo apt upgrade 
+```
+```bash 
+sudo apt install ros-humble-rmw-cyclonedds-cpp
+```
+```bash
+gedit ~/.bashrc 
+```
+### .bashrc ending  
+```bashrc
+export TURTLEBOT3_MODEL=waffle
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+source /opt/ros/humble/setup.bash
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+source ~/fedi_ws/install/setup.bash
+source /usr/share/gazebo/setup.bash
+source ~/ros2_ws/install/setup.bash
+```
+
+```bash
+cd  ~/opt/ros/humble/share/turtlebot3_navigation2/param && sudo gedit waffle.yaml
+```
+### waffle.yaml 
+```yaml
+#robot_model_type: "differential"
+robot_model_type: "nav2_amcl::DifferentialMotionModel"
+```
+
+## Make the Robot Navigate Using the Generated Map
