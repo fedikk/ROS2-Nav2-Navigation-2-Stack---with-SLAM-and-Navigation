@@ -319,4 +319,6 @@ launch the gazeo and navigation2 then
 
 ```bash
 ros2 run tf2_tools view_frames -o turtlebot
-```
+``` 
+
+[turtlebot.pdf](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/files/15130999/turtlebot.pdf)
