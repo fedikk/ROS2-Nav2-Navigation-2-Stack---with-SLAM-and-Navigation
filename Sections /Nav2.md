@@ -288,3 +288,16 @@ we have to main parts :
 Real Life analogie :
 - imagine that we are drinving a car with a GPS system : you tell the GPS you want to go to a specific GOAL
 - the GPS will tell you the path and where to go and you controll the car to follow the path 
+
+## Parameters
+
+launch : 
+   - rqt > Plugins > Configuration > Dynamic Reconfiguration > search for Glaobal costmap
+
+![Global_cost_map_rqt](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/5d67ced6-fcb3-4a54-8c41-eeda1a9c8a16)
+
+- we are going to change the **`inflation_layer.inflation_radius`** from **`0.55`** to **`0.25`** 
+
+- ![Map_with_new_inflation_value](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/10c6a043-f4e0-4e4e-89bc-2e1bab2179b9)
+
+- the map is much more clearer now because the __inflation radius__ is  the radius from the obstacle that where we still have a cost for the pixels so 0.25 means that we still have cost __20 cm__ from the obstacle 
