@@ -301,3 +301,15 @@ launch :
 - ![Map_with_new_inflation_value](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/10c6a043-f4e0-4e4e-89bc-2e1bab2179b9)
 
 - the map is much more clearer now because the __inflation radius__ is  the radius from the obstacle that where we still have a cost for the pixels so 0.25 means that we still have cost __20 cm__ from the obstacle 
+
+launch : 
+   - rqt > Plugins > Configuration > Dynamic Reconfiguration > search for Local costmap
+
+![local_cost_map_rqt](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/b31c454e-1688-4a2c-be5e-95a18605efc4)
+
+
+- we are going to change the **`inflation_layer.inflation_radius`** from **`1.0`** to **`0.5`** 
+
+![the_new_local_map](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/a8a5583a-726c-4ff5-b169-9a722a462ae2)
+
+__on the controller server you can change the velocity max and min and many other parameters__ .
