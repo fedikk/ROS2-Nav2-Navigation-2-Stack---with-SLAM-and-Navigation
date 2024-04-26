@@ -227,3 +227,39 @@ robot_model_type: "nav2_amcl::DifferentialMotionModel"
 ```
 
 ## Make the Robot Navigate Using the Generated Map
+
+first of all launch the robot : 
+```bash
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+then launch launch the __turtleBOT3_navigation2__ 
+```bash
+ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=/maps/my_first_map.yaml 
+```
+### RViz
+
+![map_loaded on rviz](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/85f7a4a4-06d9-4143-acc1-2488516dd593)
+
+we need first to give a **2D Pose** for the robot after Select **Navigation Goal** : 
+
+![2D pose](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/af89391a-9d16-45f5-8203-8488ab78843b)
+
+
+https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/ae99e386-6337-477f-9a69-3d0e52e1253b
+
+## Waypoint Follower - Go Through Multiple Nav2 Goals
+
+we can go a multiple goal to go **A** then **B** then **C**
+
+1. Set the __`Pose`__ of the robot
+2. Click on Waypoint :
+   ![waypoint](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/07ed4764-67bf-4e0a-a66f-5ef4c3752b3e)
+3. Click on **`Nav2 Goal and set the point yu want`**
+   ![waypoints_goals](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/39323ee9-b2fa-45c5-834f-798dacdc52ec)
+4. finally, Press on **`Start Nav Through Poses`**
+
+# Dynamic Obstacle Avoidance
+
+if you choose a goal for the robot and the path was planned its update every time a new obstacle is detected.
+
+# Section 5 : Understand the nav2 stack 
