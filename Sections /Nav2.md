@@ -322,3 +322,20 @@ ros2 run tf2_tools view_frames -o turtlebot
 ``` 
 
 [turtlebot.pdf](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/files/15130999/turtlebot.pdf)
+
+
+## Nav2 Architecture 
+
+## Detailed : 
+![image](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/02d645de-29f3-4f1d-b307-1b6f4efdfc14)
+
+## Simplified
+![nav2_architecture ](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/7f389869-027e-4b49-ba19-d0305e874247)
+
+- in order to fonction Nav2 requires some inputs : __`TFs + Map + Sensor Data`__
+- **navigation Goal** : Position + orientation will be the input for the __planner server__(global planner) who will give the **path** as an input to
+-  **local_planner**(controller) that will make sure that the robot follows the path and reaches the goal .
+- then we will pass the  __`Robot HW controller `__
+- __recovery Beheviour__ : when an unusall thing happen 
+
+# Build Your Own World for Navigation in Gazebo 
