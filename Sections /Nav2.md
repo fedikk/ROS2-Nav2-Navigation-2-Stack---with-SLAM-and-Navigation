@@ -313,3 +313,10 @@ launch :
 ![the_new_local_map](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/a8a5583a-726c-4ff5-b169-9a722a462ae2)
 
 __on the controller server you can change the velocity max and min and many other parameters__ .
+
+# TFs and important Frames
+launch the gazeo and navigation2 then 
+
+```bash
+ros2 run tf2_tools view_frames -o turtlebot
+```
