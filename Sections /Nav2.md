@@ -344,4 +344,67 @@ you can see [ROS2_For_Beginners_Level2](https://github.com/fedikk/ROS2-for-Begin
 
 ## import a Floor Plan
 
-![floorplan_example](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/ccdfc84c-713a-4c84-bd50-5bac229b197e)
+1. open gazebo the open the __`building editor(Ctrl+b)`__  : 
+
+![world_plan](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/fb87d6e6-a3cb-4da4-9fc2-ef37d5066684)
+
+2. then select the door and give the reel dimension
+
+   ![plan_gazebo](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/0b56552e-6ca4-4966-9fe0-052b45477767)
+
+4. then make your walls
+
+![designed_world_gazebo](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/81646ff9-163c-4f09-ac9b-7da5faf7689d)
+
+## Add objects to the world 
+
+go to insert in gazebo and just drag and drop any item .
+
+After saving your world for example : __`test_world.world`__ in my __`Desktop`__ : 
+
+```
+cd ~/Desktop && gazebo test_world.world
+```
+
+![my_world_gazebo](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/26e470d1-5d65-4e60-a77b-96486fd2e767)
+
+
+## Make Turtlebot3 Navigate In That World
+
+first of all we are going to work on a copy of turtleBot3 repo that we are going to clone from github .
+
+```bash
+mkdir turtlebot3_ws && cd turtlebot3_ws && mkdir src && cd src
+```
+```bash
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git .
+```
+```bash
+cd turtlebot3_simulations/
+```
+```bash
+git checkout humble-devel
+```
+```bash
+$ git branch 
+* humble-devel
+  master
+```
+```bash
+$ colcon build 
+```
+
+dont forget to edit ~/.bashrc and to add 
+```bash
+source ~/turtlebot3_ws/install/setup.bash
+```
+
+open a new terminal and everything should work properly for example launch turtlebot3 world : 
+```
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+
+Let's now include our world : 
+```bash
+cd turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/launch
+```
