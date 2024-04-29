@@ -770,4 +770,21 @@ ros2 run nav2_map_server map_server_cli -f maps/my_custom_map
 ![slam_vs_carto](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/a51e2a0f-62df-4c84-bbeb-57cb87b029e1)
 
 ## let's make the robot navigate in this map 
+### 1 
+```bash
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+### 2
+```bash
+ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=maps/slamtoolbox_map.yaml
+```
+### 3
+```bash
+ros2 run rviz2 rviz2 
+```
+dont forget to add **`map`** and inside it  go to : 
+**`topic`** >> **`Durabilitie`** >> **`Transiant local`** 
 
+also give a **`2D Pose Estimate`** and u can navigate as u like  : 
+
+![nav2_slam_toolbox](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/dc27fc81-eb01-4d09-aefc-0cbe38265298)
