@@ -408,3 +408,116 @@ Let's now include our world :
 ```bash
 cd turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/launch
 ```
+copy your `test_world.world` inside the **`turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/maps`** folder
+
+then edit your file by adding : 
+
+```xml
+<?xml version="1.0"?>
+```
+![adding xml](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/a3f0cbcd-a928-45e9-91df-3e2d372152b8)
+
+copy what's inside **`turtlebot_house.launch.py`** inside an new file :
+
+### turtlebot3_test_world.launch.py
+
+```python
+#!/usr/bin/env python3
+
+
+import os
+
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
+
+
+def generate_launch_description():
+    launch_file_dir = os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'launch')
+    pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
+
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    x_pose = LaunchConfiguration('x_pose', default='0.0')
+    y_pose = LaunchConfiguration('y_pose', default='0.0')
+
+    world = os.path.join(
+        get_package_share_directory('turtlebot3_gazebo'),
+        'worlds',
+        'turtlebot3_test_world.world'
+    )
+
+    gzserver_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
+        ),
+        launch_arguments={'world': world}.items()
+    )
+
+    gzclient_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
+        )
+    )
+
+    robot_state_publisher_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(launch_file_dir, 'robot_state_publisher.launch.py')
+        ),
+        launch_arguments={'use_sim_time': use_sim_time}.items()
+    )
+
+    spawn_turtlebot_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(launch_file_dir, 'spawn_turtlebot3.launch.py')
+        ),
+        launch_arguments={
+            'x_pose': x_pose,
+            'y_pose': y_pose
+        }.items()
+    )
+
+    ld = LaunchDescription()
+
+    # Add the commands to the launch description
+    ld.add_action(gzserver_cmd)
+    ld.add_action(gzclient_cmd)
+    ld.add_action(robot_state_publisher_cmd)
+    ld.add_action(spawn_turtlebot_cmd)
+
+    return ld
+```
+**`build your package`**  and then launch your file : 
+```
+ros2 launch turtlebot3_gazebo turtlebot3_test_world.launch.py
+```
+![turtlebot3_in_test_world](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/b12bd042-5920-4c29-b2be-51e60de14581)
+
+let's make the map of our world : 
+
+```bash
+$ ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=True
+```
+![map_of_test_world](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/6b29cfde-fdb9-4599-8660-55e9cc7eb44f)
+
+### let's save our map : 
+```bash
+$ ros2 run nav2_map_server map_saver_cli -f maps/test_world_map
+
+```
+
+### test_world_map.yaml
+```yaml
+image: test_world_map.yaml.pgm
+mode: trinary
+resolution: 0.05
+origin: [-7.82, -6.71, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25
+```
+
+![test_world_map_pgm](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/ede96ae9-bec0-410e-84e8-9ec32a1dd5f6)
+
+### let's run the nav2 in our world 
