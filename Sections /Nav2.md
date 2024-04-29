@@ -1,3 +1,4 @@
+l
 # ROS2 Nav2 [Navigation 2 Stack] - with SLAM and Navigation
 
 ## What is Navigation2 Stack, Why do we need it ?
@@ -362,7 +363,7 @@ go to insert in gazebo and just drag and drop any item .
 
 After saving your world for example : __`test_world.world`__ in my __`Desktop`__ : 
 
-```
+```bash
 cd ~/Desktop && gazebo test_world.world
 ```
 
@@ -400,7 +401,7 @@ source ~/turtlebot3_ws/install/setup.bash
 ```
 
 open a new terminal and everything should work properly for example launch turtlebot3 world : 
-```
+```bash
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
@@ -489,7 +490,7 @@ def generate_launch_description():
     return ld
 ```
 **`build your package`**  and then launch your file : 
-```
+```bash
 ros2 launch turtlebot3_gazebo turtlebot3_test_world.launch.py
 ```
 ![turtlebot3_in_test_world](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/b12bd042-5920-4c29-b2be-51e60de14581)
@@ -521,3 +522,13 @@ free_thresh: 0.25
 ![test_world_map_pgm](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/ede96ae9-bec0-410e-84e8-9ec32a1dd5f6)
 
 ### let's run the nav2 in our world 
+
+```bash
+ros2 launch turtlebot3_gazebo turtlebot3_test_world.launch.py
+```
+
+```bash
+ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=maps/test_world_map.yaml 
+```
+
+![map_nav2](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/16d62a5a-c1cc-49ea-a103-d38a6272e1c3)
