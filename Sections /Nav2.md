@@ -762,7 +762,7 @@ ros2 run turtlebot3_teleop teleop_keyboard
 6. Move the robot and create the map
 7. Save the map  
 ```bash
-ros2 run nav2_map_server map_server_cli -f maps/my_custom_map
+ros2 run nav2_map_server map_saver_cli -f maps/my_custom_map
 ```
 
 ## Slam tool box vs cartographer map 
