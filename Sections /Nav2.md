@@ -1,10 +1,9 @@
-l
 # ROS2 Nav2 [Navigation 2 Stack] - with SLAM and Navigation
 
-## What is Navigation2 Stack, Why do we need it ?
+## What is Navigation2 Stack, Why do we need it ?    
 
 <blockquote> Navigation = Navigation2 = Nav2 </blockquote>
-
+      
 Benefits of ROS2: 
   * Create the base layer super fast
   * Provide a standard for robotics application
@@ -532,3 +531,21 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:
 ```
 
 ![map_nav2](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/16d62a5a-c1cc-49ea-a103-d38a6272e1c3)
+
+## Tips: How To Fix and Improve Maps with Gimp
+
+like you can see our map misses some pixels the black areas 
+
+![test_world_map_pgm](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/ede96ae9-bec0-410e-84e8-9ec32a1dd5f6)
+
+we are going to fix this we need to **`Gimp`**
+
+```bash
+sudo snap install gimp
+```
+edit your map then save it in **`maps folder`** the name you  want . 
+
+![edited_map](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/f2b64ff1-85bb-40bb-9755-ec7fbce39000)
+
+then change the name of the new map the same as the old one  and everything should work properly.
+
