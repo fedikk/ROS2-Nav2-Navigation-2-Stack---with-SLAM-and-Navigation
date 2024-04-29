@@ -549,3 +549,14 @@ edit your map then save it in **`maps folder`** the name you  want .
 
 then change the name of the new map the same as the old one  and everything should work properly.
 
+
+# Activity : Custom World Activity - Make a Robot Navigate into a Generated Maze
+
+1. go to [**Maze Generator**](https://www.mazegenerator.net/)
+2. **`width = 5`** and **`height = 5`**
+3. Generate the map
+4. Donwload the map **`PNG`**
+   
+![challenge_map](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/d4db0839-bafe-4d4b-a60d-40a5b618c00f)
+
+5. **scale:** 1.2m for the door
