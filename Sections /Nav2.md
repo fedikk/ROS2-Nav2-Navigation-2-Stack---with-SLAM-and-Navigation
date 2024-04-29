@@ -563,4 +563,211 @@ then change the name of the new map the same as the old one  and everything shou
 6. adapt turtlebot3 to this world
 7. make the robot appear to one of the doors
 
-   
+___
+
+# Section 7 : Intro to Adapting a Custom Robot for Nav2 (Steps Overview)
+
+## my_robot_base.xacro
+
+```xacro
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+    
+    <!--*********************************************************************************************-->
+    <!--******************************************Variables******************************************--> 
+    <!--*********************************************************************************************-->
+    <xacro:property name="base_length" value="0.55"/>
+    <xacro:property name="base_width" value="0.34"/>
+    <xacro:property name="base_height" value="0.21"/>
+    <xacro:property name="wheel_radius" value="0.06"/>
+    <xacro:property name="wheel_length" value="0.06"/>
+    <xacro:property name="caster_wheel_radius" value="${wheel_radius / 2.0}"/>
+
+    <!--*********************************************************************************************-->
+    <!--******************************************MACROS******************************************--> 
+    <!--*********************************************************************************************-->
+    <xacro:macro name="wheel_link" params="prefix"> 
+        <link name="${prefix}_wheel_link">
+            
+            <visual>
+                <geometry>
+                    <cylinder radius="${ wheel_radius}" length="${ wheel_length}" />   
+                    <!--in the size we put length width hight all in meter-->
+                </geometry>
+                <origin xyz="0 0 0" rpy="${ pi / 2} 0 0"/> <!--rpy = roll pitch yaw-->
+                <material name="red"/>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <cylinder radius="${ wheel_radius}" length="${ wheel_length}" />   
+                </geometry>
+                <origin xyz="0 0 0" rpy="${ pi / 2} 0 0"/> 
+            </collision>
+
+            <xacro:cylinder_inertia m="2.0" r="${2*wheel_radius}" h="${2*wheel_length}" xyz="0 0 0" rpy="${ pi / 2} 0 0"/>
+
+        </link>
+    </xacro:macro>
+
+
+    
+    <!--*********************************************************************************************-->
+    <!--*********************************************Links*******************************************--> 
+    <!--*********************************************************************************************-->
+
+    <link name="base_footprint"/>
+    
+    <link name="base_link">
+        
+        <visual>
+            <geometry>
+                <box size="${base_length} ${ base_width} ${ base_height}" />   
+            </geometry>
+            <origin xyz="0 0 ${ base_height / 2.0 }" rpy="0 0 0"/> 
+            <material name="black"/>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="${base_length} ${ base_width} ${ base_height}" />   
+            </geometry>
+            <origin xyz="0 0 ${ base_height / 2.0 }" rpy="0 0 0"/> 
+        </collision>
+        
+        <xacro:box_inertia m="5.0" l="${2*base_length}" w="${ 2*base_width}" h="${2* base_height}" 
+                           xyz="0 0 ${ base_height / 2.0 }" rpy="0 0 0"/>
+
+    </link>
+
+
+    <xacro:wheel_link prefix="right"/>
+    <xacro:wheel_link prefix="left"/>
+
+
+    <link name="caster_wheel_link">
+        
+        <visual>           
+            <geometry>
+                <sphere radius="${ caster_wheel_radius}"  />   
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/> 
+            <material name="white"/> 
+        </visual>
+
+        <collision>
+            <geometry>
+                <sphere radius="${ caster_wheel_radius}"  />   
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/> 
+        </collision>
+
+        <xacro:sphere_inertia m="0.3" r="${ 2*caster_wheel_radius}" xyz="0 0 0" rpy="0 0 0"/>
+    
+    </link>
+
+    <link name="base_scan">
+        
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.06"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="blue" />
+        </visual>
+
+        <collision>
+            <geometry>
+                <cylinder radius="0.1" length="0.06"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </collision>
+
+        <xacro:sphere_inertia m="0.3" r="${ 2*0.1}" xyz="0 0 0" rpy="0 0 0"/>
+    
+    </link>
+
+    <!--**********************************************************************************************-->
+    <!--*********************************************Joints*******************************************--> 
+    <!--**********************************************************************************************-->
+    
+    <joint name="base_joint" type="fixed" > 
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 ${ wheel_radius}" rpy="0 0 0"/>
+    </joint>
+    
+    
+    <joint name="base_right_wheel_joint" type="continuous" > 
+        <parent link="base_link" />
+        <child link="right_wheel_link"/>
+        <origin xyz="${- base_length /  4.0} ${-(base_width / 2.0) - (wheel_length / 2.0)} 0" rpy="0 0 0"/>g
+        <axis xyz="0 1 0"></axis>
+    </joint>
+    
+    <joint name="base_left_wheel_joint" type="continuous" > 
+        <parent link="base_link" />
+        <child link="left_wheel_link"/>
+        <origin xyz="${- base_length /  4.0} ${+(base_width / 2.0) + (wheel_length / 2.0)} 0" rpy="0 0 0"/>
+        <axis xyz="0 1 0"></axis>
+    </joint>
+
+    <joint name="base_caster_wheel_joint" type="fixed" > 
+        <parent link="base_link" />
+        <child link="caster_wheel_link"/>
+        <origin xyz="${ base_length /  3.0} 0 ${-caster_wheel_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_scan_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="base_scan"/>
+        <origin xyz="0 0 ${base_height+0.03}" rpy="0 0 0"/>
+    </joint>
+
+</robot>
+```
+
+![Add_lidar](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/0c570c42-3f42-4af1-842d-2458d5f0565b)
+
+
+# Run Navigation With Your Custom Robot (using slam_toolbox)
+
+## let's save the map 
+first of all we need to install SlamToolbox
+```bash
+sudo apt install ros-humble-slam-toolbox
+```
+let's work with turtlebot3 then generate : 
+1.launch gazebo 
+```bash
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+2. launch the nav2 bringup 
+```bash
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=True
+```
+3. launch slam toolbox asynchrone  
+```bash
+ros2 launch slam_toolbox online_async_launch.py
+```
+4. ros2 run rviz2 rviz2 
+```bash
+ros2 run rviz2 rviz2 
+```
+dont forget to add **`robot_model`** & **`TF`** & **`Laser_scan`** & **`camera`**
+5. run  turtlebot3 teleop 
+```bash
+ros2 run turtlebot3_teleop teleop_keyboard 
+```
+6. Move the robot and create the map
+7. Save the map  
+```bash
+ros2 run nav2_map_server map_server_cli -f maps/my_custom_map
+```
+
+## Slam tool box vs cartographer map 
+
+![slam_vs_carto](https://github.com/fedikk/ROS2-Nav2-Navigation-2-Stack---with-SLAM-and-Navigation/assets/98516504/a51e2a0f-62df-4c84-bbeb-57cb87b029e1)
+
+## let's make the robot navigate in this map 
+
