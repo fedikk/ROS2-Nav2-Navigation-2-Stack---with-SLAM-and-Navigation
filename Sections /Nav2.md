@@ -65,7 +65,7 @@ sudo apt install git
 sudo apt install terminator
 ```
 ```bash
-sudo apt install code --classic
+sudo snap install --classic code
 ```
 ___
 
